@@ -69,22 +69,22 @@ footer{text-align:center;font-size:11.5px;color:#8894;padding:24px;border-top:1p
  <div class="h-meta">Fuente: Inscripciones_Asistencias2025<br>237,401 grupos · 19.1 M asistencias<br><b>Corte: 2025</b></div>
 </header>
 <main>
- <p class="lead">En un <b>día típico</b> de operación asisten alrededor de <b>76,200 personas</b> a cursos y talleres en todo el país. La demanda se concentra de <b>lunes a viernes</b>, con pico las <b>tardes (14:00–18:00)</b>, y territorialmente en el <b>Valle de México</b>. Este tablero resume los hallazgos clave y las acciones que sugieren.</p>
+ <p class="lead">En un <b>día típico</b> de operación asisten alrededor de <b>76,200 usuarios</b> a cursos y talleres en todo el país. La demanda se concentra de <b>lunes a viernes</b>, con pico las <b>tardes (14:00–18:00)</b>, y territorialmente en el <b>Valle de México</b>. Este tablero resume los hallazgos clave y las acciones que sugieren.</p>
 
  <div class="kpis">
-  <div class="kpi"><div class="num">~76,200</div><div class="lab">personas en un día típico</div></div>
+  <div class="kpi"><div class="num">~76,200</div><div class="lab">usuarios en un día típico</div></div>
   <div class="kpi t2"><div class="num">19.1 M</div><div class="lab">asistencias en el año</div></div>
   <div class="kpi t3"><div class="num">25,000</div><div class="lab">pico en la tarde (14–18 h)</div></div>
-  <div class="kpi t4"><div class="num">185</div><div class="lab">instalaciones · 35 OOAD · 32 estados</div></div>
+  <div class="kpi t4"><div class="num">155</div><div class="lab">UOPSI · 35 OOAD · 32 estados</div></div>
  </div>
 
  <div class="sec-tit">Ritmo de la demanda</div>
  <div class="grid g2">
-  <div class="card"><h2>Día típico por día de la semana</h2><p class="sub">Personas presentes en un día promedio de cada día</p><div class="chartbox"><canvas id="cDia"></canvas></div></div>
-  <div class="card"><h2>Presencia por rango de horario</h2><p class="sub">Personas por día típico · la tarde domina con 33%</p><div class="chartbox"><canvas id="cBanda"></canvas></div></div>
+  <div class="card"><h2>Día típico por día de la semana</h2><p class="sub">Usuarios presentes en un día promedio de cada día</p><div class="chartbox"><canvas id="cDia"></canvas></div></div>
+  <div class="card"><h2>Presencia por rango de horario</h2><p class="sub">Usuarios por día típico · la tarde domina con 33%</p><div class="chartbox"><canvas id="cBanda"></canvas></div></div>
  </div>
  <div class="grid g2" style="margin-top:18px">
-  <div class="card"><h2>Pico operativo: día × horario</h2><p class="sub">Personas en un día típico. El máximo son las tardes de lunes y miércoles (~26,700)</p><div id="heat" class="heat"></div></div>
+  <div class="card"><h2>Pico operativo: día × horario</h2><p class="sub">Usuarios en un día típico. El máximo son las tardes de lunes y miércoles (~26,700)</p><div id="heat" class="heat"></div></div>
   <div class="card"><h2>Estacionalidad mensual</h2><p class="sub">Asistencias por mes · máximos en mayo y octubre</p><div class="chartbox"><canvas id="cMes"></canvas></div></div>
  </div>
 
@@ -115,7 +115,7 @@ footer{text-align:center;font-size:11.5px;color:#8894;padding:24px;border-top:1p
 
  <div class="sec-tit">Insights accionables</div>
  <div class="ins">
-  <div class="icard"><span class="tag">Capacidad</span><h3>Dimensionar para el pico real</h3><p>El sistema se satura las <b>tardes de lunes y miércoles (~26,700 personas simultáneas)</b>. Aulas, instructores y servicios deben planearse para esa ventana, no para el promedio.</p></div>
+  <div class="icard"><span class="tag">Capacidad</span><h3>Dimensionar para el pico real</h3><p>El sistema se satura las <b>tardes de lunes y miércoles (~26,700 usuarios simultáneas)</b>. Aulas, instructores y servicios deben planearse para esa ventana, no para el promedio.</p></div>
   <div class="icard"><span class="tag">Eficiencia</span><h3>Repensar el fin de semana</h3><p>Un sábado rinde <b>1/15 de un día entre semana</b> (~5,200) y el domingo casi nada. Conviene evaluar cerrar, concentrar oferta o reubicar recursos.</p></div>
   <div class="icard"><span class="tag">Ocupación</span><h3>Llenar antes de abrir</h3><p>La ocupación es de solo <b>56.6%</b>: casi la mitad de los lugares quedan vacíos. Primero llenar grupos y mover oferta de franjas ociosas (noche/sábado) a la tarde entre semana.</p></div>
   <div class="icard"><span class="tag">Riesgo</span><h3>Proteger la natación</h3><p><b>Natación IMSS es el 25% de toda la asistencia</b> nacional. Cualquier limitación de albercas impacta al sistema de forma desproporcionada.</p></div>
@@ -134,8 +134,8 @@ const nf=new Intl.NumberFormat('es-MX');
 Chart.defaults.font.family="'Segoe UI',Arial,sans-serif";Chart.defaults.font.size=12;Chart.defaults.color='#556';
 const kfmt=v=>v>=1e6?(v/1e6).toFixed(1)+'M':(v/1000).toFixed(0)+'k';
 
-new Chart(cDia,{type:'bar',data:{labels:['Lun','Mar','Mié','Jue','Vie','Sáb'],datasets:[{data:D.perday,backgroundColor:['#0B5445','#0B5445','#0B5445','#0B5445','#0B5445','#9D7119'],borderRadius:6}]},options:{plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>nf.format(c.raw)+' personas'}}},scales:{y:{ticks:{callback:kfmt},grid:{color:'#eef1f0'}},x:{grid:{display:false}}}}});
-new Chart(cBanda,{type:'bar',data:{labels:['06–10','10–14','14–18','18–22'],datasets:[{data:D.banda,backgroundColor:['#9D7119','#9D7119','#0B5445','#9D7119'],borderRadius:6}]},options:{plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>nf.format(c.raw)+' personas/día'}}},scales:{y:{ticks:{callback:kfmt},grid:{color:'#eef1f0'}},x:{grid:{display:false}}}}});
+new Chart(cDia,{type:'bar',data:{labels:['Lun','Mar','Mié','Jue','Vie','Sáb'],datasets:[{data:D.perday,backgroundColor:['#0B5445','#0B5445','#0B5445','#0B5445','#0B5445','#9D7119'],borderRadius:6}]},options:{plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>nf.format(c.raw)+' usuarios'}}},scales:{y:{ticks:{callback:kfmt},grid:{color:'#eef1f0'}},x:{grid:{display:false}}}}});
+new Chart(cBanda,{type:'bar',data:{labels:['06–10','10–14','14–18','18–22'],datasets:[{data:D.banda,backgroundColor:['#9D7119','#9D7119','#0B5445','#9D7119'],borderRadius:6}]},options:{plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>nf.format(c.raw)+' usuarios/día'}}},scales:{y:{ticks:{callback:kfmt},grid:{color:'#eef1f0'}},x:{grid:{display:false}}}}});
 new Chart(cMes,{type:'line',data:{labels:['E','F','M','A','M','J','J','A','S','O','N','D'],datasets:[{data:D.meses,borderColor:V,backgroundColor:'rgba(11,84,69,.10)',fill:true,tension:.35,pointRadius:3,pointBackgroundColor:V}]},options:{plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>nf.format(c.raw)+' asistencias'}}},scales:{y:{ticks:{callback:kfmt},grid:{color:'#eef1f0'}},x:{grid:{display:false}}}}});
 new Chart(cArea,{type:'doughnut',data:{labels:['Cultura Física y Deporte','Promoción de la Salud','Capacitación y Adiestr.','Desarrollo Cultural'],datasets:[{data:D.area,backgroundColor:[V,DO,'#c9a227',V2],borderWidth:2,borderColor:'#fff'}]},options:{cutout:'58%',plugins:{legend:{position:'bottom',labels:{boxWidth:12,font:{size:11}}},tooltip:{callbacks:{label:c=>c.label+': '+kfmt(c.raw)}}}}});
 
